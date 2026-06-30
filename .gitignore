@@ -1,0 +1,8 @@
+# Dependencies
+**/node_modules/
+**/.env
+*.log
+logs/
+agent/daemon/
+**/dist/
+.vscode/
