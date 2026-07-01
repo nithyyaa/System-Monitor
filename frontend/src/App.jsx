@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback, useRef } from "react";
 import axios from "axios";
 import "./App.css";
 
-const API_BASE = "http://localhost:5000";
+const API_BASE = "https://system-monitor-2wml.onrender.com";
 
 export default function App() {
   const [systems, setSystems] = useState([]);
@@ -55,9 +55,9 @@ export default function App() {
   }, [fetchData]);
 
   useEffect(() => {
-    const interval = setInterval(fetchData, settings.heartbeatInterval || 30000);
+    const interval = setInterval(fetchData, settings.heartbeat_interval || 30000);
     return () => clearInterval(interval);
-  }, [fetchData, settings.heartbeatInterval]);
+  }, [fetchData, settings.heartbeat_interval]);
 
   const saveSettings = async () => {
     setSavingSettings(true);
@@ -547,13 +547,13 @@ export default function App() {
 
           {/* Heartbeat Interval */}
           <div className="field-group">
-            <label className="field-label" htmlFor="sp-heartbeatInterval">
+            <label className="field-label" htmlFor="sp-heartbeat_interval">
               Heartbeat Interval
               <span className="field-unit">seconds</span>
             </label>
             <div className="input-wrap">
               <input
-                id="sp-heartbeatInterval"
+                id="sp-heartbeat_interval"
                 className="field-input"
                 type="number"
                 min="1"
