@@ -22,33 +22,39 @@ export default function App() {
   const [settingsPanelOpen, setSettingsPanelOpen] = useState(false);
   const panelRef = useRef(null);
 
-  const fetchData = useCallback(async () => {
-    try {
-      const [systemsRes, settingsRes, historyRes] = await Promise.all([
-        axios.get(`${API_BASE}/systems`),
-        axios.get(`${API_BASE}/settings`),
-        axios.get(`${API_BASE}/activity-log`),
-      ]);
+const fetchData = useCallback(async () => {
+  try {
+    const [systemsRes, settingsRes, historyRes] = await Promise.all([
+      axios.get(`${API_BASE}/systems`),
+      axios.get(`${API_BASE}/settings`),
+      axios.get(`${API_BASE}/activity-log`),
+    ]);
 
-      const systemsData = systemsRes.data;
-      setSystems(systemsData);
+    const systemsData = systemsRes.data;
 
-      const total = systemsData.length;
-      const active = systemsData.filter(
-        (s) => s.status.toLowerCase() === "active"
-      ).length;
-      const idle = total - active;
-      setStats({ total, active, idle });
+    console.log("====================================");
+    console.log("Fetched at:", new Date().toLocaleTimeString());
+    console.log("Systems:", systemsData);
 
-      setSettings(settingsRes.data);
-      setActivityHistory(historyRes.data);
-      setLastUpdated(new Date());
-      setLiveStatus("online");
-    } catch (err) {
-      console.error("fetchData error:", err);
-      setLiveStatus("offline");
-    }
-  }, []);
+    setSystems(systemsData);
+
+    const total = systemsData.length;
+    const active = systemsData.filter(
+      (s) => s.status.toLowerCase() === "active"
+    ).length;
+    const idle = total - active;
+
+    setStats({ total, active, idle });
+
+    setSettings(settingsRes.data);
+    setActivityHistory(historyRes.data);
+    setLastUpdated(new Date());
+    setLiveStatus("online");
+  } catch (err) {
+    console.error("fetchData error:", err);
+    setLiveStatus("offline");
+  }
+}, []);
 
   useEffect(() => {
     fetchData();

@@ -64,7 +64,7 @@ async function sendStatus(status) {
   }
 }
 
-// Main monitor
+
 async function monitor() {
   await fetchSettings();
 
