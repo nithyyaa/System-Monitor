@@ -26,6 +26,7 @@ const PORT = process.env.PORT || 5000;
 app.post("/register", async (req, res) => {
   try {
     const { hostname, ip_address, status } = req.body;
+    console.log("REGISTER:", { hostname, ip_address, status });
     const current = await pool.query(
   "SELECT status FROM systems WHERE hostname = $1",
   [hostname]
